@@ -1,0 +1,35 @@
+<nav>
+
+<button class="harmburger btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">
+  <span class="material-symbols-outlined">menu</span>
+</button>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasLabel">Menu</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="nav-element">
+      <a href="/api/dashboard">
+      <span class="material-symbols-outlined nav-icon">dashboard</span><span>Dashboard</span>
+      </a>
+    </div>
+    <div class="nav-element">
+      <a href="/api/note/new">
+      <span class="material-symbols-outlined nav-icon">edit</span><span>Compose</span>
+      </a>
+    </div>
+    <div class="dropdown nav-element">
+      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <span class="material-symbols-outlined nav-icon">account_circle</span><span>Account</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/api/profile">profile</a></li>
+        <li><a class="dropdown-item" href="/api/users/logout">logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</nav>

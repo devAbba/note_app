@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+  <body>
+      <%- include('partials/navbar') %>
+
+      <div class="container primary-wrapper">
+        <%- include('partials/flashMessage') %>
+        <div class="note-form">
+          <form action="/api/note" method="POST">
+              <%- include('partials/form_fields', {note}) %>
+          </form>
+        </div> 
+      </div>
+
+      <script>
+        const cancelBtn = document.getElementById('cancel-btn')
+        const saveBtn = document.getElementById('save-btn')
+
+        cancelBtn.addEventListener('click', function(e){
+            e.preventDefault()
+            location.assign('/api/dashboard')
+        })
+
+        saveBtn.addEventListener('click', function(e){
+            setTimeout(() => saveBtn.disabled = true, 0)
+        })
+      </script> 
+  </body>
+</html>

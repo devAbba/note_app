@@ -1,0 +1,73 @@
+<%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container primary-wrapper">
+        <div class="notes">
+            <% if (user){ %>
+                <div class="headline">
+                    <span>Notes by <%= user.username || user.first_name %></span>
+                    <div class="search-bar">
+                        <span class="material-symbols-outlined icon-sm">search</span>
+                        <input type="text" name="search" id="search" class="search" oninput="filterQuery()">
+                        <span class="material-symbols-outlined icon-sm" onclick="clearInput()">close</span>
+                    </div>
+                    <div class="tt pen" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="compose">
+                        <span class="material-symbols-outlined nav-icon" onclick="compose()">edit</span>
+                    </div>
+                </div>
+            <% } %>
+            <hr>
+            <div class="note-list">
+                <% if (notes){ %>
+                    <% notes.forEach((note) => { %>
+                        <div class="note" id="<%= note._id %>" onclick="getNote(id)"><p><%= note.title %></p><span class="meta">created <%= note.createdAt %></span></div>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchField = document.getElementById('search')
+        const notes = document.querySelectorAll('.note')
+        const noteList = document.querySelector('.note-list')
+        let dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'long' }
+
+        function compose(){
+            location.assign('/api/note/new')
+        }
+
+        function getNote(id){
+            location.assign(`/api/note/${id}`)
+        }
+
+        function clearInput(){
+            //clears searchField
+            searchField.value = ''
+
+            //refreshes the DOM
+            document.location.reload(true);
+        }
+
+        async function filterQuery(){
+            const keyword = searchField.value
+            
+            const res = await fetch(`/api/note?title=${keyword}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            })
+
+            //get data from response
+            const data = await res.json()
+            
+            //dynamically render data to DOM
+            noteList.innerHTML = data.notes.map(note => (
+                `<div class="note" id="${note._id}" onclick="getNote(id)">
+                    <p>${note.title}</p><span class="meta">created ${new Date(note.createdAt).toLocaleDateString('en-GB', dateOptions)}</span>
+                </div>`
+            )).join('')
+
+        }
+    </script>
+</body>
+</html>
