@@ -1,0 +1,262 @@
+body {
+    background: -webkit-linear-gradient(135deg, #FFE9E1, #F0E1F7);
+    
+}
+
+.primary-wrapper h1 {
+    font-size: 7.5em;
+    margin: 15px 0px;
+    font-weight:bold;
+}
+
+.primary-wrapper {
+    height: 100vh;
+}
+
+.alert {
+    margin-top: 10px;
+}
+
+.alert-close {
+    margin-left: auto;
+}
+
+.headline {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;    
+}
+
+.search-bar {
+    border: 0.5px solid grey;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.2rem;
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.icon-sm {
+    text-align: center;
+    line-height: 1.5rem;
+    color: #acacac;  
+}
+
+.icon-sm:last-child {
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.icon-sm:last-child:hover {
+    color:#333;
+}
+
+.hide {
+    display: none;
+}
+
+.pen {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    line-height: 2.5rem;
+    margin-left: 10px;
+}
+
+.dropdown button {
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
+.nav-element {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.nav-element a {
+    text-decoration: none;
+    color: black;
+    display: inline-flex;
+}
+
+.nav-element span {
+    margin-right: 5px;
+}
+
+.nav-element button {
+    display: flex;
+    align-items: center;
+}
+
+.nav-icon {
+    color: #777;
+}
+
+.profile-group {
+    max-width: 700px;
+    margin: 5% auto;
+}
+
+.form-group {
+    margin: 5% auto;
+    max-width: 500px;
+    padding: 20px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%), linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%); 
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+
+}
+
+form .form-control:focus {
+    border-color:#CCC;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.input-label {
+    margin-bottom: 0.2rem;
+}
+
+.note-form {
+    max-width: 500px;
+    margin: 5% auto;
+}
+
+.note-form input {
+    margin-bottom: 0.5rem;
+}
+
+.note-form textarea {
+    margin-bottom: 0.3rem;
+    height: 50vh;
+    resize: none;
+}
+
+.notes {
+    max-width: 500px;
+    margin: 15px auto;
+}
+
+.notes .headline {
+    margin-bottom: -10px;
+}
+
+.note {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%), linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%); 
+    padding: 10px;
+    margin: 5px auto;
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+}
+
+.meta {
+    color: #777;
+    font-size: smaller;
+}
+
+.note p {
+    margin-bottom: 0;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.tools {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 500px;
+    margin-top: 5%;
+    margin-bottom: 0.5rem;
+}
+  
+.iconx {
+    text-align: center;
+    line-height: 3.5rem;
+    color: #acacac;
+    font-size: 1.1rem;
+    cursor: pointer;  
+    margin-left: 10px;
+}
+
+#edit-icon:hover {
+    color:#333;
+}
+
+#delete-icon:hover {
+    color: red;
+}
+
+.note-view{
+    max-width: 500px;
+}
+
+.note-view-body {
+    margin-top: 10px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+
+@media (max-width: 450px){
+    .headline {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 0.8fr 0.2fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .search-bar {
+        margin-left: 0;
+        margin-top: 5px;
+        grid-row: 2/3 ;  
+        grid-column: 1/2;
+    }
+
+    .pen {
+        grid-row: 2/3;
+        grid-column: 2/3;
+        align-self: flex-end;
+        padding-bottom: 3px;
+    }
+   
+}

@@ -1,0 +1,43 @@
+<%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container primary-wrapper">
+        <% if (note){ %>
+            <div class="tools">
+                <div class="tt" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip" data-bs-title="edit note">
+                    <span class="material-symbols-outlined iconx" id="edit-icon" data-id="<%= note._id %>" onclick="editNote()">edit_note</span>
+                </div>
+                <div class="tt" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="delete">
+                    <span class="material-symbols-outlined iconx"  id="delete-icon" data-id="<%= note._id %>" onclick="deleteNote()">delete</span>
+                </div>  
+            </div>
+            <div class="note-view">
+                <h4><%= note.title %></h4>
+                <span class="meta">last updated <%= note.updatedAt %></span>
+                <div class="note-view-body"><%= note.body %></div>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        function editNote(){
+            let id = document.getElementById('edit-icon').dataset.id
+            location.assign(`/api/note/e/${id}`)
+        }
+
+        function deleteNote(){
+            let id = document.getElementById('delete-icon').dataset.id
+    
+            try {
+                fetch(`/api/note/d/${id}`, {
+                    method:  "DELETE",
+                    headers: { "Content-Type": "application/json" }
+                }) 
+            } catch (error){
+                console.log(error)
+            }
+
+            location.assign('/api/dashboard')
+        }
+    </script>
+</body>

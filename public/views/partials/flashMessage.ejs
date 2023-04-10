@@ -1,0 +1,19 @@
+
+<% if (error.length > 0){ %>
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        
+        <div>
+            <%= error %>
+        </div>
+        <button type="button" class="btn-close alert-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if (message.length > 0){ %>
+    <div class="container alert alert-success d-flex align-items-center" role="alert">
+      <div>
+        <%= message %>
+      </div>
+      <button type="button" class="btn-close alert-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
