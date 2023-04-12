@@ -1,9 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { INote } from '../types';
 
-const ObjectId = Schema.Types.ObjectId
 const noteSchema = new Schema<INote>({
-    id: ObjectId,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -25,6 +23,12 @@ noteSchema.pre('save', function (this, next){
     const note = this;
     note.updatedAt = new Date()
     return next()
+})
+
+noteSchema.set('toJSON', {
+    transform: (_document, returnedObject: any) => {
+        delete returnedObject.__v
+    }
 })
 
 

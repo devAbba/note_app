@@ -2,9 +2,7 @@ import { Schema, model } from "mongoose";
 import { IUser } from '../types';
 import bcrypt from 'bcrypt';
 
-const ObjectId = Schema.Types.ObjectId
 const userSchema = new Schema<IUser>({
-    id: ObjectId,
     first_name: {
         type: String,
         required: true
@@ -49,7 +47,7 @@ userSchema.pre('save', async function(this, next) {
 userSchema.set('toJSON', {
     transform: (_document, returnedObject: any) => {
         delete returnedObject.__v
-        delete returnedObject.password  
+        delete returnedObject.password
     }
 })
 

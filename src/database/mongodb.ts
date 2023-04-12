@@ -9,7 +9,7 @@ const connectDB = (url: any): void => {
 
     mongoose.connection.on("error", (error) => {
         console.log("there was a problem connecting to mongodb")
-        console.log(error)
+        console.log(error)  
     })
 }
 

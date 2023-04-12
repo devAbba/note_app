@@ -1,27 +1,26 @@
 <%- include('partials/head') %>
 
 <body>
-    <%- include('partials/flashMessage') %>
     <div class="container primary-wrapper">
-    <div class="form-group">
-        <form action="login" method="POST">
-            <h4>Login</h4>
-            <div class="form-item mb-3">
-                <label for="email" class="input-label">Email</label>
-                <input type="text" name="email" class="form-control" placeholder="example@example.com">
-            </div>
-            <div class="form-item mb-3">
-                <label for="password" class="input-label">Password</label>
-                <input type="password" name="password" class="form-control">
-            </div>
-            <div class="form-item mb-3">
-                <button class="btn btn-primary" id="login-btn">Login</button>
-            </div>
-        </form>
-        <p>Don't have an account? signup <span><a href="/api/users/signup">here</a></span></p>
+        <%- include('partials/flashMessage') %>
+        <div class="form-group">
+            <form action="login" method="POST">
+                <h4>Login</h4>
+                <div class="form-item mb-3">
+                    <label for="email" class="input-label">Email</label>
+                    <input type="text" name="email" class="form-control" placeholder="example@example.com">
+                </div>
+                <div class="form-item mb-3">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" name="password" class="form-control">
+                </div>
+                <div class="form-item mb-3">
+                    <button class="btn btn-primary" id="login-btn">Login</button>
+                </div>
+            </form>
+            <p>Don't have an account? signup <span><a href="/api/users/signup">here</a></span></p>
+        </div>
     </div>
-    </div>
-    
-    
+       
 </body>
 </html>

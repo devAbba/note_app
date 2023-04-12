@@ -1,9 +1,9 @@
 <%- include('partials/head') %>
 <body>
     <%- include('partials/navbar') %>
+    
     <div class="container primary-wrapper">
         <%- include('partials/flashMessage') %>
-
         <div class="note-form" data-id="<%= note._id %>">
             <form id="note-form">
                 <%- include('partials/form_fields', {note}) %>
@@ -31,15 +31,21 @@
         saveBtn.addEventListener('click', async function(e){
             e.preventDefault()
             saveBtn.disabled = true
+
             try {
-            let note = form.note.value
-            await fetch(`/api/note/u/${id}`, {
-                method: "PATCH",
-                body: JSON.stringify({note}),
-                headers: { "Content-Type": "application/json" }
-            })
-             
-            setTimeout(() => location.assign(`/api/note/${id}`), 500) 
+                let note = form.note.value
+                const res = await fetch(`/api/note/u/${id}`, {
+                    method: "PATCH",
+                    body: JSON.stringify({note}),
+                    headers: { "Content-Type": "application/json" }
+                })
+            
+                if (res.redirected === true) {
+                    await window.location.replace(res.url);
+                } else {
+                    console.log('No redirect needed.');
+                }
+  
             }
             catch (error){
                 console.log(error)

@@ -2,6 +2,7 @@
 <body>
     <%- include('partials/navbar') %>
     <div class="container primary-wrapper">
+        <%- include('partials/flashMessage') %>
         <% if (note){ %>
             <div class="tools">
                 <div class="tt" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip" data-bs-title="edit note">
@@ -25,19 +26,25 @@
             location.assign(`/api/note/e/${id}`)
         }
 
-        function deleteNote(){
+        async function deleteNote(){
             let id = document.getElementById('delete-icon').dataset.id
     
             try {
-                fetch(`/api/note/d/${id}`, {
+
+                const res = await fetch(`/api/note/d/${id}`, {
                     method:  "DELETE",
                     headers: { "Content-Type": "application/json" }
-                }) 
+                })
+                if (res.redirected === true) {
+                    await window.location.replace(res.url);
+                } else {
+                    console.log('No redirect needed.');
+                }
+
             } catch (error){
                 console.log(error)
             }
 
-            location.assign('/api/dashboard')
         }
     </script>
 </body>
