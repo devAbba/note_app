@@ -6,11 +6,11 @@ import checkLogin from '../middleware/checkLogin';
 const usersRouter = express.Router()
 
 usersRouter.get('/signup', (req, res) => {
-    res.render('signup', {message: req.flash('message'), error: req.flash('error')})
+    res.render('signup', {message: req.flash()})
 })
 
 usersRouter.get('/login', checkLogin, (req, res) => {
-    res.render('login', {message: req.flash('message'), error: req.flash('error')})
+    res.render('login', {message: req.flash()})
 })
 
 usersRouter.post('/signup', usersController.createUser)

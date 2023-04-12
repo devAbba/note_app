@@ -40,11 +40,9 @@ async function getNote (req: any, res: any, next: Function): Promise<void>{
 
         //query db with id 
         const note = await Note.findById(id)
-        res.render('noteView', {note, message: req.flash('message'), error: req.flash('error')})
+        res.render('noteView', {note, message: req.flash()})
     }
     catch (error){
-        console.log(error)
-        req.flash('error', 'unexpected error')
         next(error)
     }
 }
@@ -60,7 +58,7 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
         //flash error message if note already exists
         if (noteInDb){
             req.flash('error', 'note with that title already exists')
-            return res.redirect('/api/note')
+            return res.redirect('/api/note/new')
         }
         else {
             const noteToSave = new Note({
@@ -78,7 +76,7 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
                 await userInDb.save()
             }
 
-            req.flash('message', 'note saved successfully')
+            req.flash('success', 'note saved successfully')
             setTimeout(() => res.redirect('/api/dashboard'), 500)
         }
     }  
@@ -93,19 +91,37 @@ async function modifyNote(req: any, res: any, next: Function):Promise<void>{
         const id = req.params.id
         await Note.findByIdAndUpdate(id, {body: note})
        
-        req.flash('message', 'note updated successfully')
-        res.redirect('/api/dashboard')
+        req.flash('success', 'note updated successfully')
+        res.redirect(`/api/note/${id}`)
+    }
+    catch (error){
+        next(error) 
+    }
+}
+
+async function deleteNote(req: any, res: any, next: Function): Promise<void>{
+    try {
+        const id = req.params.id
+        const note = await Note.findByIdAndDelete(id)
+        if (note){
+            req.flash('success', `${note.title} deleted`)
+            return res.redirect('/api/dashboard')
+        }
+        
     }
     catch (error){
         next(error)
     }
 }
 
-async function deleteNote(req: any, _res: any, next: Function): Promise<void>{
+function renderNoteForm(req: any, res: any): void {
+    res.render('noteform.ejs', {message: req.flash(), note: new Note()})
+}
+
+async function renderEditNote(req: any, res: any, next: Function): Promise<void>{
     try {
-        const id = req.params.id
-        await Note.findByIdAndDelete(id)
-        req.flash('message', 'note deleted')
+        const note = await Note.findById(req.params.id)
+        res.render('notePatch', {message: req.flash(), note})
     }
     catch (error){
         next(error)
@@ -117,5 +133,7 @@ export default {
     getNote,
     createNote,
     modifyNote,
-    deleteNote
+    deleteNote,
+    renderNoteForm,
+    renderEditNote
 };

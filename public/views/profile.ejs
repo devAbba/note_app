@@ -1,8 +1,9 @@
 <%- include('partials/head') %>
 <body style="background: white;">
-    <%- include('partials/navbar') %>
-    <%- include('partials/flashMessage') %>
+    <%- include('partials/navbar') %> 
+
     <div class="container primary-wrapper">
+        <%- include('partials/flashMessage') %>
         <% if(user){ %>
             <div class="profile-group">
                 <form id="profile-form">
@@ -34,7 +35,6 @@
     <script>
         const save_btn = document.getElementById('save-profile')
         const form = document.getElementById('profile-form')
-       
 
         save_btn.addEventListener('click', async function(e){
             e.preventDefault()
@@ -42,13 +42,23 @@
             const first_name = form.first_name.value
             const last_name = form.last_name.value
             const username = form.username.value
-
-            const res = await fetch('/api/profile/update', {
-                method: "PATCH",
-                body: JSON.stringify({first_name, last_name, username}),
-                headers: { "Content-Type": "application/json" }
-            })
-            location.assign('/api/profile')
+            try {
+                const res = await fetch('/api/profile/update', {
+                    method: "PATCH",
+                    body: JSON.stringify({first_name, last_name, username}),
+                    headers: { "Content-Type": "application/json" }
+                })
+                
+                if (res.redirected === true) {
+                    await window.location.replace(res.url);
+                } else {
+                    console.log('No redirect needed.');
+                }
+            }
+            catch (error){
+                console.log(error)
+            }
+            
         })
     </script>
 </body>

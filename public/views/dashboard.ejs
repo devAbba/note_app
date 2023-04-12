@@ -1,7 +1,9 @@
 <%- include('partials/head') %>
 <body>
     <%- include('partials/navbar') %>
+    
     <div class="container primary-wrapper">
+        <%- include('partials/flashMessage') %>
         <div class="notes">
             <% if (user){ %>
                 <div class="headline">

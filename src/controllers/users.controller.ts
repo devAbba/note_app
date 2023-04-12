@@ -1,15 +1,14 @@
 import User from '../models/users.model';
-
 import bcrypt from 'bcrypt';
 
 
-async function createUser (req: any, res: any): Promise<void>{
+async function createUser (req: any, res: any, next: Function): Promise<void>{
     try {
         //destructure values from the request body
         const { first_name, last_name, username, email, password } = req.body
 
         //checks if the user already exists in db
-        const userExist = await User.findOne({email: email})
+        const userExist = await User.findOne({email: email}).select('-password')
 
         //flash error message if user exists in db
         if (userExist){
@@ -31,18 +30,17 @@ async function createUser (req: any, res: any): Promise<void>{
             //saves the user id in session cookie
             req.session.userId = user._id
 
-            req.flash('message', 'signup successful')
-            res.redirect('/api/dashboard')
+            req.flash('success', 'signup successful')
+            return res.redirect('/api/dashboard')
         }
     }
     catch (error){
-        console.log(error)
-        req.flash('error', 'unexpected error')
+        next(error)
     }
     
 }
 
-async function loginUser (req: any, res: any): Promise<void>{
+async function loginUser (req: any, res: any, next: Function): Promise<void>{
     try {
         const { email, password } = req.body
         const user = await User.findOne({'email': email})
@@ -54,25 +52,23 @@ async function loginUser (req: any, res: any): Promise<void>{
         
         req.session.userId = user._id
 
-        req.flash('message', 'login successful')
+        req.flash('success', 'login successful')
         res.redirect('/api/dashboard')
     }
     catch (error){
-        console.log(error)
-        req.flash('error', 'unexpected error')
-        res.redirect('/api/users/login')
+        next(error)
+        
     }
 }
 
-async function logout (req: any, res: any){
+async function logout (req: any, res: any, next: Function){
     try {
         req.session.destroy()
-        res.redirect('/api/users/login')
+        return res.redirect('/api/users/login')
 
     }
     catch (error){
-        console.log(error)
-        req.flash('error', 'unexpected error')
+        next(error)
     }  
 }
 

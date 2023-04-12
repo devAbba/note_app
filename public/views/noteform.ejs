@@ -1,12 +1,11 @@
 <%- include('partials/head') %>
   <body>
       <%- include('partials/navbar') %>
-
       <div class="container primary-wrapper">
         <%- include('partials/flashMessage') %>
         <div class="note-form">
           <form action="/api/note" method="POST">
-              <%- include('partials/form_fields', {note}) %>
+            <%- include('partials/form_fields', {note}) %>
           </form>
         </div> 
       </div>
@@ -20,7 +19,7 @@
             location.assign('/api/dashboard')
         })
 
-        saveBtn.addEventListener('click', function(e){
+        saveBtn.addEventListener('click', function(){
             setTimeout(() => saveBtn.disabled = true, 0)
         })
       </script> 
