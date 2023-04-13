@@ -8,7 +8,6 @@ const noteSchema = new Schema<INote>({
     },
     title: {
         type: String,
-        unique: true,
         required: true
     },
     body: {

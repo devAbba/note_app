@@ -1,4 +1,4 @@
-import User from '../models/users.model';
+import usersService from '../services/users.service';
 import bcrypt from 'bcrypt';
 
 
@@ -8,7 +8,7 @@ async function createUser (req: any, res: any, next: Function): Promise<void>{
         const { first_name, last_name, username, email, password } = req.body
 
         //checks if the user already exists in db
-        const userExist = await User.findOne({email: email}).select('-password')
+        const userExist = await usersService.getOne({email: email})
 
         //flash error message if user exists in db
         if (userExist){
@@ -16,16 +16,17 @@ async function createUser (req: any, res: any, next: Function): Promise<void>{
             return res.redirect('/api/users/signup')
         } 
         else {
-            //create new user entry in db
-            const newUser = new User({
+            
+            const userData = {
                 first_name,
                 last_name,
                 username,
                 email,
                 password
-            })
+            }
 
-            const user = await newUser.save()
+            //create new user entry in db
+            const user = await usersService.newRecord(userData)
 
             //saves the user id in session cookie
             req.session.userId = user._id
@@ -43,7 +44,7 @@ async function createUser (req: any, res: any, next: Function): Promise<void>{
 async function loginUser (req: any, res: any, next: Function): Promise<void>{
     try {
         const { email, password } = req.body
-        const user = await User.findOne({'email': email})
+        const user = await usersService.authInfo({'email': email})
         const userMatch = user === null ? false : await bcrypt.compare(password, user.password)
         if (!(user && userMatch)){
             req.flash('error', 'invalid username/password')
