@@ -111,7 +111,7 @@ body {
 }
 
 .form-group {
-    margin: 10% auto;
+    margin: 5% auto;
     max-width: 500px;
     padding: 20px;
     background: linear-gradient(to right, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%), linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 77%, rgba(255, 255, 255, 0.3) 92%, rgba(255, 255, 255, 0.3) 100%); 

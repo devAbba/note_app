@@ -1,7 +1,12 @@
-import User from "../models/users.model"
+import usersService from "../services/users.service"
 
 async function renderProfile(req: any, res: any): Promise<void> {
-    const user = await User.findById(req.session.userId).select('-password')
+    //get userId from session cookie
+    const userId = req.session.userId
+
+    //get user data
+    const user = await usersService.getOne({_id: userId})
+
     res.render('profile', {message: req.flash(), user})
 }
 
@@ -9,7 +14,8 @@ async function updateProfile(req: any, res: any): Promise<void> {
     try {
         const id = req.session.userId
         const { first_name, last_name, username } = req.body
-        await User.findByIdAndUpdate(id, {
+
+        await usersService.updateRecord(id, {
             first_name,
             last_name,
             username
