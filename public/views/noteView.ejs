@@ -6,7 +6,7 @@
         <% if (note){ %>
             <div class="tools">
                 <div class="tt" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip" data-bs-title="edit note">
-                    <span class="material-symbols-outlined iconx" id="edit-icon" data-id="<%= note._id %>" onclick="editNote()">edit_note</span>
+                    <span class="material-symbols-outlined iconx" id="edit-icon" data-slug="<%= note.slug %>" onclick="editNote()">edit_note</span>
                 </div>
                 <div class="tt" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="delete">
                     <span class="material-symbols-outlined iconx"  id="delete-icon" data-id="<%= note._id %>" onclick="deleteNote()">delete</span>
@@ -15,15 +15,16 @@
             <div class="note-view">
                 <h4><%= note.title %></h4>
                 <span class="meta">last updated <%= note.updatedAt %></span>
-                <div class="note-view-body"><%= note.body %></div>
+                <div class="note-view-body"><%- note.sanitizedHtml %></div>
             </div>
         <% } %>
     </div>
 
     <script>
         function editNote(){
-            let id = document.getElementById('edit-icon').dataset.id
-            location.assign(`/api/note/e/${id}`)
+            let slug = document.getElementById('edit-icon').dataset.slug
+            console.log(slug)
+            location.assign(`/api/note/e/${slug}`)
         }
 
         async function deleteNote(){

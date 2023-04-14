@@ -1,11 +1,11 @@
 <div class="note-form">
     <form id="note-form" data-id="<%= note._id %>">
         <div>
-            <input type="text" name="title" value="<%= note.title %>" id="title" class="form-control" placeholder="Title">
+            <input type="text" name="title" value="<%= note.title %>" id="title" class="form-control" placeholder="Title" required>
         </div>
         <div>
             <label for="note">note:</label>
-            <textarea name="note" id="note-field" class="form-control"><%= note.body %></textarea>
+            <textarea name="note" id="note-field" class="form-control" required><%= note.body %></textarea>
         </div>
         <div>
             <button id="cancel-btn" class="btn btn-outline-secondary">cancel</button>

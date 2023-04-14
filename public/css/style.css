@@ -171,6 +171,11 @@ form .form-control:focus {
     margin-bottom: 0;
 }
 
+.note a {
+    text-decoration: none;
+    Color: black;
+}
+
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,

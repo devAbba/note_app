@@ -22,7 +22,10 @@
             <div class="note-list">
                 <% if (notes){ %>
                     <% notes.forEach((note) => { %>
-                        <div class="note" id="<%= note._id %>" onclick="getNote(id)"><p><%= note.title %></p><span class="meta">created <%= note.createdAt %></span></div>
+                        <div class="note" id="<%= note._id %>">
+                            <a href="/api/note/<%=note.slug%>"><p><%= note.title %></p></a>
+                            <span class="meta">created <%= note.createdAt %></span>
+                        </div>
                     <% }) %>
                 <% } %>
             </div>
@@ -39,9 +42,6 @@
             location.assign('/api/note/new')
         }
 
-        function getNote(id){
-            location.assign(`/api/note/${id}`)
-        }
 
         function clearInput(){
             //clears searchField
@@ -64,8 +64,9 @@
             
             //dynamically render data to DOM
             noteList.innerHTML = data.notes.map(note => (
-                `<div class="note" id="${note._id}" onclick="getNote(id)">
-                    <p>${note.title}</p><span class="meta">created ${new Date(note.createdAt).toLocaleDateString('en-GB', dateOptions)}</span>
+                `<div class="note" id="${note._id}">
+                    <a href="/api/note/${note.slug}"><p>${note.title}</p></a>
+                    <span class="meta">created ${new Date(note.createdAt).toLocaleDateString('en-GB', dateOptions)}</span>
                 </div>`
             )).join('')
 

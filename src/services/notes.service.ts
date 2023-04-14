@@ -2,8 +2,8 @@ import Note from "../models/notes.model";
 import usersService from "./users.service";
 
 
-async function getAll(query: object){
-    const notes =  await Note.find(query)
+async function getMatching(query: object, fields: object){
+    const notes =  await Note.find({...query, ...fields})
     return notes
 }
 
@@ -26,9 +26,13 @@ async function newRecord(data: object, userId: string){
     return savedNote
 }
 
-async function updateRecord(data: object, id: string){
-    const updatedNote = await Note.findByIdAndUpdate(id, data)
-    return updatedNote
+async function updateRecord(noteBody: string, id: string){
+    let note = await Note.findById(id)
+    if (note){
+        note.body = noteBody
+        note = await note.save()
+        return note
+    }  
 }
 
 async function deleteRecord(id: string){
@@ -38,7 +42,7 @@ async function deleteRecord(id: string){
 
 
 export default {
-    getAll,
+    getMatching,
     getOne,
     newRecord,
     updateRecord,

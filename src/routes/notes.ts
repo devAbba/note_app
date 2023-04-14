@@ -9,9 +9,9 @@ notesRouter.get('/new', noteController.renderNoteForm)
 
 notesRouter.post('/', noteController.createNote)
 
-notesRouter.get('/:id', noteController.getNote)
+notesRouter.get('/:slug', noteController.getNote)
 
-notesRouter.get('/e/:id', noteController.renderEditNote)
+notesRouter.get('/e/:slug', noteController.renderEditNote)
 
 notesRouter.patch('/u/:id', noteController.modifyNote)
 

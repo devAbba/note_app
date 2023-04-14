@@ -21,8 +21,12 @@ async function getUserNotes (req: any, res: any, next: Function): Promise<void>{
             findQuery.title = {$in: pattern}
         }
 
+        //add secondary query fields
+        const queryFields: { [key: string]: any } = {}
+        queryFields.author = user_id
+
         //query db by author field and regex pattern
-        const notes = await notesService.getAll({...findQuery, author: user_id})
+        const notes = await notesService.getMatching(findQuery, queryFields)
         
         res.status(200).json({
             status: true,
@@ -36,11 +40,11 @@ async function getUserNotes (req: any, res: any, next: Function): Promise<void>{
 
 async function getNote (req: any, res: any, next: Function): Promise<void>{
     try {
-        //get id from request parameters
-        const note_id = req.params.id
+        //get query string from request parameters
+        const query_string = req.params.slug
 
         //query db with id 
-        const note = await notesService.getOne({id: note_id})
+        const note = await notesService.getOne({slug: query_string})
 
         res.render('noteView', {note, message: req.flash()})
     }
@@ -56,9 +60,14 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
         
         //check if note with title already exists
         const findQuery: { [key: string]: any } = {}
+        const queryFields: { [key: string]: any } = {}
+
         const pattern = new RegExp(title, 'i')
         findQuery.title = {$in: pattern}
-        const noteInDb = await notesService.getAll({...findQuery, author: user_id})
+
+        queryFields.author = user_id
+
+        const noteInDb = await notesService.getMatching(findQuery, queryFields)
 
         //flash error message if note already exists
         if (noteInDb.length > 0){
@@ -86,12 +95,18 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
 
 async function modifyNote(req: any, res: any, next: Function):Promise<void>{
     try {
+        
         const { note } = req.body
         const id = req.params.id
-        await notesService.updateRecord({body: note}, id)
-       
-        req.flash('success', 'note updated successfully')
-        res.redirect(`/api/note/${id}`)
+
+        const record = await notesService.updateRecord(note, id)
+
+        if (record){
+            const slug = record.slug
+            req.flash('success', 'note updated successfully')
+            res.redirect(`/api/note/${slug}`)
+        }
+         
     }
     catch (error){
         next(error) 
@@ -124,8 +139,8 @@ function renderNoteForm(req: any, res: any): void {
 
 async function renderEditNote(req: any, res: any, next: Function): Promise<void>{
     try {
-        const note_id = req.params.id
-        const note = await notesService.getOne({_id: note_id})
+        const slug = req.params.slug
+        const note = await notesService.getOne({slug: slug})
         res.render('notePatch', {message: req.flash(), note})
     }
     catch (error){
