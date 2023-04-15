@@ -12,9 +12,12 @@ export interface IUser {
 export interface INote {
     title: string;
     author: ObjectId;
+    body: string;
     createdAt: Date;
     updatedAt: Date;
-    body: string;
+    slug?: string;
+    sanitizedHtml?: string
 }
 
+export type sortBy = 'asc' | 'desc' | 'createdAt' | 'updatedAt'
 

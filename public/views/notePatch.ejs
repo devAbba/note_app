@@ -4,7 +4,7 @@
     
     <div class="container primary-wrapper">
         <%- include('partials/flashMessage') %>
-        <div class="note-form" data-id="<%= note._id %>">
+        <div class="note-form" data-slug="<%= note.slug %>" data-id="<%= note._id %>">
             <form id="note-form">
                 <%- include('partials/form_fields', {note}) %>
             </form>
@@ -12,12 +12,14 @@
     </div>
 
     <script>
+        const form = document.getElementById('note-form')
         const cancelBtn = document.getElementById('cancel-btn')
         const saveBtn = document.getElementById('save-btn')
         const title = document.getElementById('title')
-        const id = document.querySelector('.note-form').dataset.id
-        const form = document.getElementById('note-form')
-
+        const noteContainer = document.querySelector('.note-form')
+        const id = noteContainer.dataset.id
+        const slug = noteContainer.dataset.slug
+        
 
         window.addEventListener('load', function(){
             title.disabled = true
@@ -25,7 +27,7 @@
         
         cancelBtn.addEventListener('click', function(e){
             e.preventDefault()
-            location.assign(`/api/note/${id}`)
+            location.assign(`/api/note/${slug}`)
         })
 
         saveBtn.addEventListener('click', async function(e){
@@ -33,10 +35,11 @@
             saveBtn.disabled = true
 
             try {
+                let title = form.title.value
                 let note = form.note.value
                 const res = await fetch(`/api/note/u/${id}`, {
                     method: "PATCH",
-                    body: JSON.stringify({note}),
+                    body: JSON.stringify({title, note}),
                     headers: { "Content-Type": "application/json" }
                 })
             

@@ -8,7 +8,7 @@ async function createUser (req: any, res: any, next: Function): Promise<void>{
         const { first_name, last_name, username, email, password } = req.body
 
         //checks if the user already exists in db
-        const userExist = await usersService.getOne({email: email})
+        const userExist = await usersService.getOne('email', email)
 
         //flash error message if user exists in db
         if (userExist){
@@ -44,7 +44,7 @@ async function createUser (req: any, res: any, next: Function): Promise<void>{
 async function loginUser (req: any, res: any, next: Function): Promise<void>{
     try {
         const { email, password } = req.body
-        const user = await usersService.authInfo({'email': email})
+        const user = await usersService.authInfo('email', email)
         const userMatch = user === null ? false : await bcrypt.compare(password, user.password)
         if (!(user && userMatch)){
             req.flash('error', 'invalid username/password')

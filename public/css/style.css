@@ -1,6 +1,13 @@
 body {
-    background: -webkit-linear-gradient(135deg, #FFE9E1, #F0E1F7);
-    
+    transition: ease-in-out 0.5s;
+    scroll-behavior: smooth;
+    background: no-repeat center center; 
+    background-size: cover;
+    background-image: url('https://res.cloudinary.com/dnncez2l8/image/upload/v1681515329/stock_images/pexels-karolina-grabowska-5477706_omszuk.jpg');   
+}
+
+.redish {
+    color: orangered;
 }
 
 .primary-wrapper h1 {
@@ -13,8 +20,25 @@ body {
     height: 100vh;
 }
 
+.intro {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro img {
+    width: 80%;
+    height: 80%;
+}
+
+.intro h2 {
+    font-size: 2.5em;
+}
+
 .alert {
-    margin-top: 5%;
+    margin-top: 15px;
 }
 
 .alert-close {
@@ -26,6 +50,10 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 5px;    
+}
+
+.headline .nav-icon {
+    color: #555;
 }
 
 .search-bar {
@@ -171,6 +199,14 @@ form .form-control:focus {
     margin-bottom: 0;
 }
 
+.note a {
+    text-decoration: none;
+    Color: black;
+}
+.note a:hover {
+    color: black;
+}
+
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,
@@ -237,6 +273,22 @@ form .form-control:focus {
 
 
 @media (max-width: 450px){
+
+    .intro {
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        align-items: center;
+    }
+
+    .intro-desc {
+        align-self: flex-start;
+    }
+
+    .intro img {
+        height: 100%;
+        width: 100%;
+        
+    }
     
     .headline {
         display: grid;

@@ -5,7 +5,7 @@ async function renderProfile(req: any, res: any): Promise<void> {
     const userId = req.session.userId
 
     //get user data
-    const user = await usersService.getOne({_id: userId})
+    const user = await usersService.getOne('id', userId)
 
     res.render('profile', {message: req.flash(), user})
 }

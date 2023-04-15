@@ -4,25 +4,20 @@ import notesService from "../services/notes.service"
 
 async function getUserNotes (req: any, res: any, next: Function): Promise<void>{
     try {
+        let pattern = /.*/
+
         //user id from request object
         const user_id = req.session.userId
 
-        //destructure title keyword/pattern from request query
+        //destructure title from request query
         const { title } = req.query
-        
-        //create regex pattern from title query string
-        const pattern = new RegExp(title, 'i')
 
-        //create a query object to use in db query
-        const findQuery: { [key: string]: any } = {}
-        
-        //create a regex query for title
         if (title){
-            findQuery.title = {$in: pattern}
+            pattern = new RegExp(title, 'i')
         }
-
+        
         //query db by author field and regex pattern
-        const notes = await notesService.getAll({...findQuery, author: user_id})
+        const notes = await notesService.getMatching(pattern, ['author', user_id])
         
         res.status(200).json({
             status: true,
@@ -36,11 +31,12 @@ async function getUserNotes (req: any, res: any, next: Function): Promise<void>{
 
 async function getNote (req: any, res: any, next: Function): Promise<void>{
     try {
-        //get id from request parameters
-        const note_id = req.params.id
+        //get query string from request parameters
+        const query_string = req.params.slug
+        const user_id = req.session.userId
 
         //query db with id 
-        const note = await notesService.getOne({id: note_id})
+        const note = await notesService.getOne({slug: query_string, author: user_id})
 
         res.render('noteView', {note, message: req.flash()})
     }
@@ -55,10 +51,8 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
         const user_id = req.session.userId
         
         //check if note with title already exists
-        const findQuery: { [key: string]: any } = {}
         const pattern = new RegExp(title, 'i')
-        findQuery.title = {$in: pattern}
-        const noteInDb = await notesService.getAll({...findQuery, author: user_id})
+        const noteInDb = await notesService.getMatching(pattern, ['author', user_id])
 
         //flash error message if note already exists
         if (noteInDb.length > 0){
@@ -86,12 +80,18 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
 
 async function modifyNote(req: any, res: any, next: Function):Promise<void>{
     try {
+        
         const { note } = req.body
         const id = req.params.id
-        await notesService.updateRecord({body: note}, id)
-       
-        req.flash('success', 'note updated successfully')
-        res.redirect(`/api/note/${id}`)
+
+        const record = await notesService.updateRecord(note, id)
+
+        if (record){
+            const slug = record.slug
+            req.flash('success', 'note updated successfully')
+            res.redirect(`/api/note/${slug}`)
+        }
+         
     }
     catch (error){
         next(error) 
@@ -100,11 +100,13 @@ async function modifyNote(req: any, res: any, next: Function):Promise<void>{
 
 async function deleteNote(req: any, res: any, next: Function): Promise<void>{
     try {
+        const userId = req.session.userId
+
         //get noteId from query params
-        const id = req.params.id
+        const note_id = req.params.id
 
         //delete note from db
-        const note = await notesService.deleteRecord(id)
+        const note = await notesService.deleteRecord(note_id, userId)
 
         //flash success message if successful
         if (note){
@@ -124,8 +126,9 @@ function renderNoteForm(req: any, res: any): void {
 
 async function renderEditNote(req: any, res: any, next: Function): Promise<void>{
     try {
-        const note_id = req.params.id
-        const note = await notesService.getOne({_id: note_id})
+        const slug = req.params.slug
+        const user_id = req.session.userId
+        const note = await notesService.getOne({slug: slug, author: user_id})
         res.render('notePatch', {message: req.flash(), note})
     }
     catch (error){
