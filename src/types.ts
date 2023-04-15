@@ -19,4 +19,5 @@ export interface INote {
     sanitizedHtml?: string
 }
 
+export type sortBy = 'asc' | 'desc' | 'createdAt' | 'updatedAt'
 

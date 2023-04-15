@@ -35,7 +35,7 @@ const noteSchema = new Schema<INote>({
     slug: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
     sanitizedHtml: {
         type: String,
