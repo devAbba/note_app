@@ -35,11 +35,12 @@
             saveBtn.disabled = true
 
             try {
+                
                 let title = form.title.value
-                let note = form.note.value
+                let body = form.body.value
                 const res = await fetch(`/api/note/u/${id}`, {
                     method: "PATCH",
-                    body: JSON.stringify({title, note}),
+                    body: JSON.stringify({title, body}),
                     headers: { "Content-Type": "application/json" }
                 })
             

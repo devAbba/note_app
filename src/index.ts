@@ -1,5 +1,4 @@
 import express from 'express';
-import connectDB from './database/mongodb';
 import usersRouter from './routes/users';
 import dbRouter from './routes/dashboard';
 import session from 'express-session';
@@ -8,16 +7,13 @@ import isLoggedIn from './middleware/authenticate';
 import MongoStore from 'connect-mongo';
 import notesRouter from './routes/notes';
 import profileRouter from './routes/profile';
-require('dotenv').config()
+require('dotenv').config();
 
 const flash = require('connect-flash')
 
-const port = process.env.PORT
 const mongo_url = process.env.mongo_url
 
 const app = express();
-
-connectDB(mongo_url);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -68,8 +64,6 @@ app.use('*', (_req, res) => {
     res.render('invalidRoute')
 })
 
-app.listen(port, () => {
-    console.log(`server is listening on port: ${port}`)
-})
+export default app
 
 

@@ -2,6 +2,7 @@ import express from 'express';
 import usersController from '../controllers/users.controller';
 import isLoggedIn from '../middleware/authenticate';
 import checkLogin from '../middleware/checkLogin';
+import userValidator from '../validators/user.validator'
 
 const usersRouter = express.Router()
 
@@ -13,7 +14,7 @@ usersRouter.get('/login', checkLogin, (req, res) => {
     res.render('login', {message: req.flash()})
 })
 
-usersRouter.post('/signup', usersController.createUser)
+usersRouter.post('/signup', userValidator.AddUserValidation, usersController.createUser)
 
 usersRouter.post('/login', usersController.loginUser)
 
