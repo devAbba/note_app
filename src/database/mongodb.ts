@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const connectDB = (url: any): void => {
+const connectDB = (url: string): void => {
     mongoose.connect(url)
 
     mongoose.connection.on("connected", () => {

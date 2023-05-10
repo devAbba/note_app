@@ -23,8 +23,7 @@ async function authInfo(field: string, value: string){
     else {
         const user = await User.findOne({'username': value})
         return user
-    }
-    
+    }  
 }
 
 async function newRecord(data: object){

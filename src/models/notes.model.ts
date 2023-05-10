@@ -28,7 +28,6 @@ const noteSchema = new Schema<INote>({
     body: {
         type: String,
         required: true,
-        trim: false
     },
     createdAt: Date,
     updatedAt: Date,

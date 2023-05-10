@@ -1,16 +1,38 @@
 <%- include('partials/head') %>
     <body style="background: white;">
-        <div class="container primary-wrapper">
-            <div class="intro">
-                <div>
-                    <img src="https://res.cloudinary.com/dnncez2l8/image/upload/v1681578092/stock_images/pexels-jeshootscom-442574_dqoq5z.jpg" alt="landing page image">
+      <div class="header container-fluid">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                  <a class="navbar-brand active" aria-current="page" href="/">Wunder Note</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                      <a class="nav-link" href="/api/dashboard">Dashboard</a>
+                      <a class="nav-link" href="/api/users/signup">Register</a>
+                      <a class="nav-link" href="/api/users/login">Login</a>
+                    </div>
+                  </div>
                 </div>
-                <div class="intro-desc">
-                    <h2 ><span class="redish">Quick</span> Notes</h2>
-                    <p>Carry your notes with you whereever you go as long you're connected to the internet. With markdown support, making neat tidy notes should be a delight</p>
-                    <a href="/api/users/login" class="btn btn-outline-primary">Get Started</a>
-                </div>
-            </div>
+              </nav>
+      </div>
+      <div class="container">
+        <div class="intro">
+          <div>
+              <img src="https://res.cloudinary.com/dnncez2l8/image/upload/v1683629927/note_illustration_mflzlh.jpg">
+          </div>
+          <div class="intro-desc">
+              <h2 ><span class="redish">Marked</span> Notes</h2>
+              <p>Carry your notes with you whereever you go as long you're connected to the internet. With markdown support, making neat tidy notes should be a delight</p>
+              <a href="/api/users/login" class="btn btn-outline-primary">Get Started</a>
+          </div>
         </div>
+      </div>
+      <footer>
+        <div>
+          <a href="https://www.freepik.com/free-vector/notes-concept-illustration_6170327.htm#query=notes%20illustration&position=1&from_view=keyword&track=ais">Image by storyset</a> on Freepik
+        </div>
+      </footer>
     </body>
 </html>

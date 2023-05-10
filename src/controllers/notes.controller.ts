@@ -4,6 +4,7 @@ import notesService from "../services/notes.service"
 
 async function getUserNotes (req: any, res: any, next: Function): Promise<void>{
     try {
+        //matches all if no query is provided
         let pattern = /.*/
 
         //user id from request object
@@ -47,7 +48,7 @@ async function getNote (req: any, res: any, next: Function): Promise<void>{
 
 async function createNote(req: any, res: any, next: Function):Promise<void>{
     try {
-        const {title, note} = req.body
+        const {title, body} = req.body
         const user_id = req.session.userId
         
         //check if note with title already exists
@@ -56,14 +57,14 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
 
         //flash error message if note already exists
         if (noteInDb.length > 0){
-            req.flash('error', 'note with that title already exists')
+            req.flash('error', 'save error: note with that title already exists')
             return res.redirect('/api/note/new')
         }
         else {
             const note_data = {
                 title,
                 author: user_id,
-                body: note,
+                body,
                 createdAt: new Date()
             }
 
@@ -81,10 +82,10 @@ async function createNote(req: any, res: any, next: Function):Promise<void>{
 async function modifyNote(req: any, res: any, next: Function):Promise<void>{
     try {
         
-        const { note } = req.body
+        const { body } = req.body
         const id = req.params.id
 
-        const record = await notesService.updateRecord(note, id)
+        const record = await notesService.updateRecord(body, id)
 
         if (record){
             const slug = record.slug
