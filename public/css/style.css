@@ -154,6 +154,10 @@ form .form-control:focus {
     margin-bottom: 0.2rem;
 }
 
+.login-form {
+    margin-top: 25vh;
+}
+
 .note-form {
     max-width: 500px;
     margin: 5% auto;
