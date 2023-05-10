@@ -2,7 +2,7 @@
   "name": "notes_app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "tsc": "tsc",
     "test": "jest --runInBand --detectOpenHandles",
