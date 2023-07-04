@@ -9,7 +9,7 @@ const UserAddSchema = Joi.object({
         .max(255)
         .trim()
         .required(),
-    username: Joi.string()
+    username: Joi.string().allow('')
         .max(255)
         .trim()
         .optional(),
@@ -30,22 +30,23 @@ const UpdateUserSchema = Joi.object({
     first_name: Joi.string()
         .max(255)
         .trim()
-        .optional(),
+        .required(),
     last_name: Joi.string()
         .max(255)
         .trim()
-        .optional(),
-    username: Joi.string()
+        .required(),
+    username: Joi.string().allow('')
         .max(255)
         .trim()
         .optional(),
+        
     notes: Joi.array()
         .items(Joi.string()),
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
         .min(6)
         .max(50)
-        .optional() 
+       .required() 
 })
 
 
